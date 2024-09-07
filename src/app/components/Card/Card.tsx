@@ -1,4 +1,3 @@
-// components/Card/Card.tsx
 import Link from "next/link";
 import style from "./Card.module.css";
 import Image from "next/image";
@@ -11,13 +10,14 @@ interface CardProps {
 }
 
 export default function Card({ href, imgSrc, title, releaseDate }: CardProps) {
+    
     return (
-        <Link href={href} className={style.card}>
+        <Link href={`/detalhes/${href}`} className={style.card}>
             <Image
                 src={imgSrc}
                 alt={title}
                 className={style.cardImage}
-                width={220}
+                width={200}
                 height={320}
             />
             <div className={style.cardBody}>

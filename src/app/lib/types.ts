@@ -15,3 +15,11 @@ export interface Serie {
     first_air_date: string;
     poster_path: string;
 }
+
+export interface MovieDetailsTypes {
+    id: number;
+    title: string;
+    poster_path: string;
+    release_date: string;
+    overview: string;
+}

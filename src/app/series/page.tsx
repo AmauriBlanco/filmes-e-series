@@ -1,11 +1,24 @@
-// app/page.tsx
+"use client";
 import Card from ".././/components/Card/Card";
 import style from "./style.module.css";
 import { getSeries } from ".././lib/api";
 import { Serie } from ".././lib/types";
+import { useEffect, useState } from "react";
+import Pagination from "../components/Pagination/Pagination";
 
-const HomePage = async () => {
-    const series: Serie[] = await getSeries();
+const HomePage = () => {
+    const [series, setSeries] = useState<Serie[]>([]);
+    const [page, setPage] = useState(1); 
+
+    useEffect(() => {
+        const fetchSeries = async () => {
+            const data = await getSeries(`${page}`);
+            setSeries(data);
+        };
+
+        fetchSeries();
+    }, [page]);
+
     return (
         <div>
             <section className={style.secaoCatalogo}>
@@ -22,6 +35,8 @@ const HomePage = async () => {
                             />
                         ))}
                     </div>
+
+                    <Pagination page={page} setPage={setPage} />
                 </div>
             </section>
         </div>
