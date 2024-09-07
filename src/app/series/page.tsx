@@ -1,24 +1,24 @@
 // app/page.tsx
 import Card from ".././/components/Card/Card";
 import style from "./style.module.css";
-import { getMovies } from ".././lib/api";
-import { Movie } from ".././lib/types";
+import { getSeries } from ".././lib/api";
+import { Serie } from ".././lib/types";
 
 const HomePage = async () => {
-    const movies: Movie[] = await getMovies();
+    const series: Serie[] = await getSeries();
     return (
         <div>
             <section className={style.secaoCatalogo}>
                 <div className="container">
                     <h2 className={style.sectionTitle}>Filmes Populares</h2>
                     <div className={style.cardContainer}>
-                        {movies.map((movie) => (
+                        {series.map((serie) => (
                             <Card
-                                key={movie.id}
-                                href={movie.href}
-                                imgSrc={movie.imgSrc}
-                                title={movie.title}
-                                releaseDate={movie.release_date}
+                                key={serie.id}
+                                href={serie.href}
+                                imgSrc={serie.imgSrc}
+                                title={serie.name}
+                                releaseDate={serie.first_air_date}
                             />
                         ))}
                     </div>

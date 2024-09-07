@@ -1,0 +1,7 @@
+/* components/Footer/Footer.module.css */
+.footer {
+    background-color: var(--blue-theme);
+    text-align: center;
+    color: white;
+    padding: 10px;
+}

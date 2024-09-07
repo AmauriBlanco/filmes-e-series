@@ -1,13 +1,5 @@
-.sectionTitle {
-    margin-bottom: 2rem;
-}
-
 .cardContainer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 3rem;
-}
-
-.secaoCatalogo {
-    margin-bottom: 3rem;
 }

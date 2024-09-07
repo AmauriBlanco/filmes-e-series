@@ -1,0 +1,30 @@
+.card {
+    display: block;
+    /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.384); */
+    border-radius: 5px;
+    color: #fff;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.cardImage {
+    max-width: 100%;
+    border-radius: 5px 5px 0 0;
+}
+
+.cardBody {
+    padding: 1rem;
+}
+
+.cardTitle {
+    text-align: center;
+    font-size: 1rem;
+}

@@ -1,0 +1,20 @@
+.headerTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.headerTitle svg {
+    color: red;
+}
+
+
+
+.titleIcon {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
