@@ -1,4 +1,3 @@
-// app/page.tsx
 import Card from ".//components/Card/Card";
 import style from "./page.module.css";
 import { getMovies, getSeries } from "./lib/api";
@@ -24,6 +23,7 @@ const HomePage = async () => {
                                 imgSrc={movie.imgSrc}
                                 title={movie.title}
                                 releaseDate={movie.release_date}
+                                type="detalhesFilmes"
                             />
                         ))}
                     </div>
@@ -41,6 +41,7 @@ const HomePage = async () => {
                                 imgSrc={serie.imgSrc}
                                 title={serie.name}
                                 releaseDate={serie.first_air_date}
+                                type="detalhesSeries"
                             />
                         ))}
                     </div>

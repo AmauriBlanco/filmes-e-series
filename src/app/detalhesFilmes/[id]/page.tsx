@@ -1,7 +1,7 @@
 "use client";
-import { useParams } from "next/navigation"; 
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getMovieDetails, getMovies } from "../../lib/api"; 
+import { getMovieDetails, getMovies } from "../../lib/api";
 import { Movie, MovieDetailsTypes } from "../../lib/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
@@ -23,10 +23,15 @@ const MovieDetailsPage = () => {
         }
     }, [id]);
 
+    function getRandomIndex(max: number): number {
+        return Math.floor(Math.random() * max);
+    }
+
     useEffect(() => {
         const fetchMovies = async () => {
-            const data = await getMovies(); // Chama a função assíncrona
-            setSuggestedMovies(data.slice(0, 4)); // Define os filmes sugeridos
+            const data = await getMovies(getRandomIndex(500)); // Chama a função assíncrona
+            const randomIndex = getRandomIndex(data.length - 4);
+            setSuggestedMovies(data.slice(randomIndex, randomIndex + 4)); // Define os filmes sugeridos
         };
         fetchMovies();
     }, []);
@@ -35,7 +40,7 @@ const MovieDetailsPage = () => {
 
     return (
         <div>
-            <section>
+            <section className={style.detalhes}>
                 <div className="container">
                     <h1>{movie.title}</h1>
                     <Image
@@ -59,6 +64,7 @@ const MovieDetailsPage = () => {
                                 imgSrc={movie.imgSrc}
                                 title={movie.title}
                                 releaseDate={movie.release_date}
+                                type="detalhesFilmes"
                             />
                         ))}
                     </div>

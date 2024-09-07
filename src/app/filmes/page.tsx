@@ -21,6 +21,8 @@ const MoviesPage = () => {
         fetchMovies();
     }, []);
 
+
+
     useEffect(() => {
         if (searchQuery) {
             const lowercasedQuery = searchQuery.toLowerCase();
@@ -46,8 +48,7 @@ const MoviesPage = () => {
                                 href={movie.href}
                                 imgSrc={movie.imgSrc}
                                 title={movie.title}
-                                releaseDate={movie.release_date}
-                            />
+                                releaseDate={movie.release_date} type={"detalhesFilmes"}                            />
                         ))}
                     </div>
                 </div>

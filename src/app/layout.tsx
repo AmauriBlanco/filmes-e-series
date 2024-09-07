@@ -1,4 +1,3 @@
-// app/layout.tsx
 import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header/Header";
 import "./styles/globals.css";

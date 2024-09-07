@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation"; // Importar usePathname e useRouter
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
@@ -15,13 +15,25 @@ export default function Header() {
         setIsMenuOpen((prevState) => !prevState);
     };
 
-    const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        // Redirecionar para a página de busca com a query
-        router.push(`/filmes?search=${encodeURIComponent(searchQuery)}`);
+    const showSearch = pathname === "/filmes" || pathname === "/series";
+
+    const handleSearch = (query: string) => {
+        const searchUrl = pathname?.includes("/filmes") ? "filmes" : "series";
+        if (query) {
+            router.push(`/${searchUrl}?search=${encodeURIComponent(query)}`);
+        } else {
+            // Redireciona para a lista original quando o input estiver vazio
+            router.push(`/${searchUrl}`);
+        }
     };
 
-    const showSearch = pathname === "/filmes" || pathname === "/series";
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            handleSearch(searchQuery);
+        }); // Adiciona um pequeno atraso para evitar disparos a cada tecla pressionada
+
+        return () => clearTimeout(delayDebounceFn); // Limpa o timer anterior ao digitar novamente
+    }, [searchQuery]); // Executa o efeito sempre que searchQuery muda
 
     return (
         <header className={styles.header}>
@@ -74,15 +86,14 @@ export default function Header() {
 
             {/* Mostrar campo de busca apenas nas páginas /filmes e /series */}
             {showSearch && (
-                <form onSubmit={handleSearch} className={styles.searchForm}>
+                <div className={styles.searchForm}>
                     <input
                         type="text"
                         placeholder="Buscar..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
-                    <button type="submit">Buscar</button>
-                </form>
+                </div>
             )}
         </header>
     );
