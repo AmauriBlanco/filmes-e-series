@@ -16,11 +16,11 @@ const MoviesPage = () => {
 
     useEffect(() => {
         const fetchMovies = async () => {
-            const data = await getMovies(page); 
+            const data = await getMovies(page);
             setMovies(data);
         };
         fetchMovies();
-    }, []);
+    }, [page]);
 
     useEffect(() => {
         if (searchQuery) {

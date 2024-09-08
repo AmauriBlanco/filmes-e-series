@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./InputSearch.module.css";
 import { usePathname, useRouter } from "next/navigation";
+import { FaSearch } from "react-icons/fa";
 export default function InputSearch() {
     const [searchQuery, setSearchQuery] = useState("");
     const pathname = usePathname();
@@ -25,13 +26,17 @@ export default function InputSearch() {
     }, [searchQuery]);
 
     return (
-        <div className={styles.searchForm}>
+        <form className={styles.searchForm}>
+            <label htmlFor="seacrh">
+                <FaSearch />
+            </label>
             <input
-                type="text"
+                id="search"
+                type="search"
                 placeholder="Buscar..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
-        </div>
+        </form>
     );
 }

@@ -1,6 +1,6 @@
 .card {
     display: block;
-    /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.384); */
+    max-width: 250px;
     border-radius: 5px;
     color: #fff;
 }
@@ -21,11 +21,19 @@
 }
 
 .cardBody {
-    padding: 1rem;
+    padding: .5rem 0;
 }
 
 .cardTitle {
-    text-align: center;
     font-size: 1rem;
-    color: red;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.cardReleaseDate {
+    font-size: .7rem;
+}
+
+.cardReleaseDate span {
+    font-weight: 700;
 }

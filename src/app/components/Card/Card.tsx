@@ -30,7 +30,7 @@ export default function Card({
             <div className={style.cardBody}>
                 <h3 className={style.cardTitle}>{title}</h3>
                 <p className={style.cardReleaseDate}>
-                    Lançamento: {releaseDate}
+                    <span>Lançamento:</span> {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(releaseDate))}
                 </p>
             </div>
         </Link>

@@ -4,3 +4,13 @@
     gap: 3rem;
 }
 
+.sectionTitle {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+@media(max-width: 576px) {
+    .cardContainer {
+        place-items: center;
+    }
+}

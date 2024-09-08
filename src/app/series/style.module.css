@@ -3,3 +3,14 @@
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 3rem;
 }
+
+.sectionTitle {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+@media(max-width: 576px) {
+    .cardContainer {
+        place-items: center;
+    }
+}
