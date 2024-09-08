@@ -1,0 +1,138 @@
+.cardContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    place-items: start;
+    gap: 5rem;
+}
+
+.detalhes {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+    color: #fff;
+}
+
+.detalhes img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.detalheInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 1.4rem;
+}
+
+.detalheInfo span {
+    font-weight: bolder;
+    text-decoration: underline;
+    color: var(--orage-theme);
+}
+
+.vote {
+    border-radius: 7px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.average {
+    background-color: rgb(171, 173, 3);
+}
+
+.aboveAverage {
+    background-color: rgb(19, 138, 4);
+}
+
+.infoBottom {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+}
+
+.overview {
+    position: relative;
+    overflow: hidden;
+    max-height: 100%;
+    transition: max-height 0.3s ease;
+}
+
+.showMore {
+    display: none;
+}
+
+.sugestao {
+    margin-top: 2rem;
+}
+.cardContainer img {
+    width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .cardContainer {
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .overview {
+        max-height: 200px;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        font-size: 1.1rem;
+    }
+    .overview.expanded {
+        display: block;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        max-height: 100%;
+    }
+
+    .showMore {
+        display: block;
+        text-align: right;
+        cursor: pointer;
+        background-color: transparent;
+        text-decoration: underline;
+        color: var(--orage-theme);
+        border: 0;
+        margin-top: -1rem;
+    }
+
+    .infoBottom {
+        font-size: 0.9rem;
+    }
+
+    .genres span,
+    .release span {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .detalhes {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .infoBottom {
+        gap: 1rem;
+        align-items: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .cardContainer {
+        place-items: center;
+    }
+}

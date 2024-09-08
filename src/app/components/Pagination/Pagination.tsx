@@ -6,10 +6,12 @@ interface PaginationProps {
 export default function Pagination({ page, setPage }: PaginationProps) {
     const handleNextPage = () => {
         setPage(page + 1);
+        window.scrollTo(0, 0);
     };
 
     const handlePrevPage = () => {
         setPage(page - 1);
+        window.scrollTo(0, 0);
     };
     return (
         <div className={style.pagination}>

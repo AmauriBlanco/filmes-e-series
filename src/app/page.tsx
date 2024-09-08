@@ -23,7 +23,7 @@ const HomePage = async () => {
                                 imgSrc={movie.imgSrc}
                                 title={movie.title}
                                 releaseDate={movie.release_date}
-                                type="detalhesFilmes"
+                                type="detalhes-filmes"
                             />
                         ))}
                     </div>
@@ -41,7 +41,7 @@ const HomePage = async () => {
                                 imgSrc={serie.imgSrc}
                                 title={serie.name}
                                 releaseDate={serie.first_air_date}
-                                type="detalhesSeries"
+                                type="detalhes-series"
                             />
                         ))}
                     </div>

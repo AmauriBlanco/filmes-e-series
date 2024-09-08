@@ -5,9 +5,26 @@
 .cardContainer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    place-items: start;
     gap: 3rem;
 }
 
 .secaoCatalogo {
     margin-bottom: 3rem;
+}
+
+@media (max-width: 576px) {
+    .cardContainer {
+        gap: 1rem;
+    }
+
+    .card {
+        max-width: 230px;
+    }
+}
+
+@media (max-width: 405px) {
+    .cardContainer {
+        place-items: center;
+    }
 }

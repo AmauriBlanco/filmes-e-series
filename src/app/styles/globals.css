@@ -1,22 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
 :root {
-    --blue-theme: #032541;
-    --green-theme: #01d277;
+    --gray-theme: #1c1c1c;
+    --red-theme: #cc2727;
+    --orage-theme: #ff9800;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: rgb(8, 8, 8);
+    background-color: var(--gray-theme);
 }
 
 main {
@@ -43,6 +44,28 @@ ol {
     width: 100%;
     padding: 0 15px;
     margin: 0 auto;
+}
+
+.spinner {
+    height: 500px;
+    display: grid;
+    place-items: center;
+}
+
+.spinner svg {
+    color: var(--red-theme);
+    height: 150px;
+    width: auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @media (min-width: 0px) {

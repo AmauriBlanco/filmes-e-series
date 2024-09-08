@@ -11,6 +11,7 @@ const MoviesPage = () => {
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get("search") || "";
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [childCount, setChildCount] = useState<number>(0);
     const [page, setPage] = useState(1);
     const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
 
@@ -35,12 +36,26 @@ const MoviesPage = () => {
         }
     }, [searchQuery, movies]);
 
+    useEffect(() => {
+        setChildCount(filteredMovies.length);
+    }, [filteredMovies]);
+
     return (
         <div>
             <section>
                 <div className="container">
                     <h2 className={style.sectionTitle}>Filmes Populares</h2>
-                    <div className={style.cardContainer}>
+                    <div
+                        className={`${style.cardContainer} ${
+                            childCount >= 4
+                                ? style.has4OrMore
+                                : childCount === 3
+                                ? style.has3
+                                : childCount === 2
+                                ? style.has2
+                                : style.has1
+                        }`}
+                    >
                         {filteredMovies.map((movie) => (
                             <Card
                                 key={movie.id}
@@ -48,7 +63,7 @@ const MoviesPage = () => {
                                 imgSrc={movie.imgSrc}
                                 title={movie.title}
                                 releaseDate={movie.release_date}
-                                type={"detalhesFilmes"}
+                                type={"detalhes-filmes"}
                             />
                         ))}
                     </div>

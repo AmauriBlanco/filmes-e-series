@@ -18,11 +18,8 @@ export default function InputSearch() {
     };
 
     useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            handleSearch(searchQuery);
-        });
-
-        return () => clearTimeout(delayDebounceFn);
+        handleSearch(searchQuery);
+        console.log(searchQuery);
     }, [searchQuery]);
 
     return (

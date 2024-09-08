@@ -8,6 +8,7 @@ export interface Movie {
 }
 
 export interface Serie {
+   
     id: number;
     imgSrc: string;
     name: string;
@@ -22,13 +23,19 @@ export interface MovieDetailsTypes {
     poster_path: string;
     release_date: string;
     overview: string;
+    genres: string[]; 
+    vote_average: number;
 }
+
 
 export interface SerieDetailsTypes {
     id: number;
-    title: string;
+    name: string; 
     poster_path: string;
-    release_date: string;
+    first_air_date: string; 
     overview: string;
+    genres: string[]; 
+    vote_average: number; 
 }
+
 

@@ -11,10 +11,18 @@
     color: red;
 }
 
-
-
 .titleIcon {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+@media(max-width:576px) {
+    .headerTitle {
+        font-size: 1rem;
+    }
+
+    .titleIcon {
+        gap: .5rem;
+    }
 }

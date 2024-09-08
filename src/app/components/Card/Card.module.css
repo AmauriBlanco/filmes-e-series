@@ -1,13 +1,12 @@
 .card {
     display: block;
-    max-width: 250px;
     border-radius: 5px;
     color: #fff;
 }
 
 .card img {
-    width: 100%;
-    height: auto;
+    width: 220px;
+    height: 320px;
     object-fit: cover;
 }
 
@@ -21,7 +20,7 @@
 }
 
 .cardBody {
-    padding: .5rem 0;
+    padding: 0.5rem 0;
 }
 
 .cardTitle {
@@ -31,9 +30,21 @@
 }
 
 .cardReleaseDate {
-    font-size: .7rem;
+    font-size: 0.7rem;
 }
 
 .cardReleaseDate span {
     font-weight: 700;
+}
+
+@media (max-width: 576px) {
+    .card {
+        max-width: 220px;
+    }
+    .card img {
+        
+        width: 220px;
+        height: auto;
+        object-fit: cover;
+    }
 }

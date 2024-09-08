@@ -73,13 +73,14 @@ export default function Header() {
                                 {showSearch && <InputSearch />}
                             </li>
                             <li>
-                                <Link href="/filmes">Filmes</Link>
+                                <Link onClick={toggleMenu} href="/filmes">Filmes</Link>
                             </li>
                             <li>
-                                <Link href="/series">Séries</Link>
+                                <Link onClick={toggleMenu} href="/series">Séries</Link>
                             </li>
                         </ul>
                     </nav>
+                    <div className={styles.backdrop}></div>
                 </div>
             </div>
         </header>
