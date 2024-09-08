@@ -1,15 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import InputSearch from "../InputSearch/InputSearch";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
-    const pathname = usePathname(); // Obter o pathname atual
-    const router = useRouter(); // Obter o roteador para navegação
+    const pathname = usePathname();
 
     const toggleMenu = () => {
         setIsMenuOpen((prevState) => !prevState);
@@ -17,29 +16,11 @@ export default function Header() {
 
     const showSearch = pathname === "/filmes" || pathname === "/series";
 
-    const handleSearch = (query: string) => {
-        const searchUrl = pathname?.includes("/filmes") ? "filmes" : "series";
-        if (query) {
-            router.push(`/${searchUrl}?search=${encodeURIComponent(query)}`);
-        } else {
-            // Redireciona para a lista original quando o input estiver vazio
-            router.push(`/${searchUrl}`);
-        }
-    };
-
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            handleSearch(searchQuery);
-        }); // Adiciona um pequeno atraso para evitar disparos a cada tecla pressionada
-
-        return () => clearTimeout(delayDebounceFn); // Limpa o timer anterior ao digitar novamente
-    }, [searchQuery]); // Executa o efeito sempre que searchQuery muda
-
     return (
         <header className={styles.header}>
             <div className="container">
                 <div className={styles.menu}>
-                    <Link href="/">Filmes e Séries</Link>
+                    <Link href="/">SalaryFlix</Link>
                     <AiOutlineMenu
                         className={`${styles.icone} ${
                             isMenuOpen ? styles.hidden : ""
@@ -54,10 +35,24 @@ export default function Header() {
                         />
                         <ul>
                             <li>
-                                <Link href="/filmes">Filmes</Link>
+                                {/* Mostrar campo de busca apenas nas páginas /filmes e /series */}
+                                {showSearch && <InputSearch />}
                             </li>
                             <li>
-                                <Link href="/series">Séries</Link>
+                                <Link
+                                    href="/filmes"
+                                    className={styles.linkHeader}
+                                >
+                                    Filmes
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/series"
+                                    className={styles.linkHeader}
+                                >
+                                    Séries
+                                </Link>
                             </li>
                         </ul>
                     </nav>
@@ -74,6 +69,10 @@ export default function Header() {
                         />
                         <ul>
                             <li>
+                                {/* Mostrar campo de busca apenas nas páginas /filmes e /series */}
+                                {showSearch && <InputSearch />}
+                            </li>
+                            <li>
                                 <Link href="/filmes">Filmes</Link>
                             </li>
                             <li>
@@ -83,18 +82,6 @@ export default function Header() {
                     </nav>
                 </div>
             </div>
-
-            {/* Mostrar campo de busca apenas nas páginas /filmes e /series */}
-            {showSearch && (
-                <div className={styles.searchForm}>
-                    <input
-                        type="text"
-                        placeholder="Buscar..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </div>
-            )}
         </header>
     );
 }

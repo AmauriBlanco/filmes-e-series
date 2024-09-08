@@ -49,6 +49,7 @@ const MovieDetailsPage = () => {
                         src={`https://image.tmdb.org/t/p/w500${serie.poster_path}`}
                         width={200}
                         height={400}
+                        priority
                     />
                     <p>Data de lançamento: {serie.release_date}</p>
                     <p>Descrição: {serie.overview}</p>

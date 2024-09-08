@@ -1,27 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { getMovies } from "../lib/api"; 
-import { Movie } from "../lib/types"; 
+import { getMovies } from "../lib/api";
+import { Movie } from "../lib/types";
 import Card from "@/app/components/Card/Card";
 import style from "./style.module.css";
+import Pagination from "../components/Pagination/Pagination";
 
 const MoviesPage = () => {
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get("search") || "";
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [page, setPage] = useState(1);
     const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
 
     useEffect(() => {
         const fetchMovies = async () => {
-            const data = await getMovies(); // Chama a função assíncrona
-            console.log(data)
+            const data = await getMovies(page); 
             setMovies(data);
         };
         fetchMovies();
     }, []);
-
-
 
     useEffect(() => {
         if (searchQuery) {
@@ -48,9 +47,12 @@ const MoviesPage = () => {
                                 href={movie.href}
                                 imgSrc={movie.imgSrc}
                                 title={movie.title}
-                                releaseDate={movie.release_date} type={"detalhesFilmes"}                            />
+                                releaseDate={movie.release_date}
+                                type={"detalhesFilmes"}
+                            />
                         ))}
                     </div>
+                    <Pagination page={page} setPage={setPage} />
                 </div>
             </section>
         </div>

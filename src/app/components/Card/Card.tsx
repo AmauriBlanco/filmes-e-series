@@ -25,6 +25,7 @@ export default function Card({
                 className={style.cardImage}
                 width={200}
                 height={320}
+                priority
             />
             <div className={style.cardBody}>
                 <h3 className={style.cardTitle}>{title}</h3>

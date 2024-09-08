@@ -9,8 +9,8 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     return (
-        <html lang="pt-BR">
-            <body>
+        <html lang="pt-BR" suppressHydrationWarning={true}>
+            <body suppressHydrationWarning={true}>
                 <Header />
                 <main>{children}</main>
                 <Footer />
