@@ -1,9 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Este é um projeto [Next.js](https://nextjs.org) iniciado com [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Configurando o Projeto
 
-First, run the development server:
+### Clonando o Repositório
 
+Primeiro, clone o repositório para a sua máquina local:
+
+```bash
+git clone https://github.com/AmauriBlanco/filmes-e-series
+cd filmes-e-series
+```
+
+### Obtendo a Chave da API do The Movie Database (TMDB)
+Para utilizar os recursos da API do The Movie Database (TMDB), você precisa de uma chave de API. Siga os passos abaixo para obter a sua:
+
+-Acesse [`The Movie Database`](https://www.themoviedb.org/);
+-Crie uma conta ou faça login;
+
+-Vá para a seção de configurações da conta e clique em "API";
+
+-Solicite uma nova chave de API seguindo as instruções do site;
+
+-Após a aprovação, você verá sua chave de API.
+
+### Configurando o Ambiente de Desenvolvimento
+-Crie um arquivo `.env` na raiz do seu projeto
+-Adicione sua chave de API no arquivo `.env`
+```bash
+NEXT_PUBLIC_API_KEY=sua_chave_aqui
+```
+
+## iniciado com
+
+Primeiro, execute o servidor de desenvolvimento:
 ```bash
 npm run dev
 # or
@@ -14,23 +43,13 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Você pode começar a editar a página modificando `app/page.tsx`. A página atualiza automaticamente conforme você edita o arquivo.
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+Para saber mais sobre Next.js, consulte os seguintes recursos:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Documentação do Next.js](https://nextjs.org/docs) - aprenda sobre os recursos e API do Next.js.
+- [Aprenda Next.js](https://nextjs.org/learn) - um tutorial interativo sobre Next.js.
