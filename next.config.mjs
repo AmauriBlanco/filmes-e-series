@@ -8,7 +8,6 @@ const nextConfig = {
         ],
     },
     trailingSlash: true,
-    output: "export", // Adiciona a configuração para exportação estática
 };
 
 export default nextConfig;
