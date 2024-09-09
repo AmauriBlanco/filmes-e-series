@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { getMovies } from "../lib/api";
@@ -18,8 +19,13 @@ export default function MoviesPage() {
 
     useEffect(() => {
         const fetchMovies = async () => {
-            const data = await getMovies(page);
-            setMovies(data);
+            try {
+                const data = await getMovies(page);
+                setMovies(data);
+            } catch (error) {
+                console.error("Failed to fetch movies:", error);
+                setMovies([]); // Handle error by setting an empty array or other fallback value
+            }
         };
         fetchMovies();
     }, [page]);
@@ -69,16 +75,22 @@ export default function MoviesPage() {
                                 : style.has1
                         }`}
                     >
-                        {filteredMovies.map((movie) => (
-                            <Card
-                                key={movie.id}
-                                href={movie.href}
-                                imgSrc={movie.imgSrc}
-                                title={movie.title}
-                                releaseDate={movie.release_date}
-                                type="detalhes-filme"
-                            />
-                        ))}
+                        {filteredMovies.length > 0 ? (
+                            filteredMovies.map((movie) => (
+                                <Card
+                                    key={movie.id}
+                                    href={movie.href}
+                                    imgSrc={movie.imgSrc}
+                                    title={movie.title}
+                                    releaseDate={movie.release_date}
+                                    type="detalhes-filme"
+                                />
+                            ))
+                        ) : (
+                            <div className="spinner">
+                                <ImSpinner2 />
+                            </div>
+                        )}
                     </div>
                     <Pagination page={page} setPage={setPage} />
                 </div>

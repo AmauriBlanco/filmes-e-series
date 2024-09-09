@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import styles from "./InputSearch.module.css";
 import { usePathname, useRouter } from "next/navigation";

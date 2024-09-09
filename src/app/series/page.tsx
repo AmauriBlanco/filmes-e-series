@@ -1,11 +1,12 @@
 "use client";
-import Card from "../components/Card/Card";
-import style from "./style.module.css";
+
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { getSeries } from "../lib/api";
 import { Serie } from "../lib/types";
-import { useEffect, useState } from "react";
+import Card from "../components/Card/Card";
+import style from "./style.module.css";
 import Pagination from "../components/Pagination/Pagination";
-import { useSearchParams } from "next/navigation";
 import { ImSpinner2 } from "react-icons/im";
 
 const SeriesPage = () => {
@@ -18,8 +19,13 @@ const SeriesPage = () => {
 
     useEffect(() => {
         const fetchSeries = async () => {
-            const data = await getSeries(page);
-            setSeries(data);
+            try {
+                const data = await getSeries(page);
+                setSeries(data);
+            } catch (error) {
+                console.error("Failed to fetch series:", error);
+                setSeries([]); // Handle error by setting an empty array or other fallback value
+            }
         };
 
         fetchSeries();
@@ -58,7 +64,7 @@ const SeriesPage = () => {
         <div>
             <section className={style.secaoCatalogo}>
                 <div className="container">
-                    <h2 className={style.sectionTitle}>Filmes Populares</h2>
+                    <h2 className={style.sectionTitle}>Séries Populares</h2>
                     <div
                         className={`${style.cardContainer} ${
                             childCount >= 4
@@ -70,16 +76,22 @@ const SeriesPage = () => {
                                 : style.has1
                         }`}
                     >
-                        {filteredSeries.map((serie) => (
-                            <Card
-                                key={serie.id}
-                                href={serie.href}
-                                imgSrc={serie.imgSrc}
-                                title={serie.name}
-                                releaseDate={serie.first_air_date}
-                                type="detalhes-serie"
-                            />
-                        ))}
+                        {filteredSeries.length > 0 ? (
+                            filteredSeries.map((serie) => (
+                                <Card
+                                    key={serie.id}
+                                    href={serie.href}
+                                    imgSrc={serie.imgSrc}
+                                    title={serie.name}
+                                    releaseDate={serie.first_air_date}
+                                    type="detalhes-serie"
+                                />
+                            ))
+                        ) : (
+                            <div className="spinner">
+                                <ImSpinner2 />
+                            </div>
+                        )}
                     </div>
 
                     <Pagination page={page} setPage={setPage} />
