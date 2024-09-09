@@ -6,9 +6,10 @@ import { Serie } from "../lib/types";
 import { useEffect, useState } from "react";
 import Pagination from "../components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
+import { ImSpinner2 } from "react-icons/im";
 
-const HomePage = () => {
-    const [series, setSeries] = useState<Serie[]>([]);
+const SeriesPage = () => {
+    const [series, setSeries] = useState<Serie[] | null>(null);
     const [page, setPage] = useState(1);
     const [filteredSeries, setFilteredSeries] = useState<Serie[]>([]);
     const [childCount, setChildCount] = useState<number>(0);
@@ -25,22 +26,33 @@ const HomePage = () => {
     }, [page]);
 
     useEffect(() => {
-        if (searchQuery) {
-            const lowercasedQuery = searchQuery.toLowerCase();
-            setFilteredSeries(
-                series.filter((serie) =>
-                    serie.name.toLowerCase().includes(lowercasedQuery)
-                )
-            );
-        } else {
-            setFilteredSeries(series);
+        if (series) {
+            if (searchQuery) {
+                const lowercasedQuery = searchQuery.toLowerCase();
+                setFilteredSeries(
+                    series.filter((serie) =>
+                        serie.name.toLowerCase().includes(lowercasedQuery)
+                    )
+                );
+            } else {
+                setFilteredSeries(series);
+            }
         }
     }, [searchQuery, series]);
 
     useEffect(() => {
-        setChildCount(filteredSeries.length);
+        if (filteredSeries) {
+            setChildCount(filteredSeries.length);
+        }
     }, [filteredSeries]);
 
+    if (series === null) {
+        return (
+            <div className="spinner">
+                <ImSpinner2 />
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -77,4 +89,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default SeriesPage;

@@ -1,7 +1,6 @@
 import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header/Header";
 import "./styles/globals.css";
-import React from "react";
 
 interface RootLayoutProps {
     children: React.ReactNode;

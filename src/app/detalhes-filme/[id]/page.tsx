@@ -9,7 +9,7 @@ import style from "./style.module.css";
 import HeaderEmAlta from "@/app/components/HeaderSections/HeaderEmAlta";
 import { ImSpinner2 } from "react-icons/im";
 
-const MovieDetailsPage = () => {
+export default function MovieDetailsPage() {
     const { id } = useParams(); // Use useParams para obter o ID da URL
     const [movie, setMovie] = useState<MovieDetailsTypes | null>(null);
     const [suggestedMovies, setSuggestedMovies] = useState<Movie[]>([]);
@@ -28,8 +28,6 @@ const MovieDetailsPage = () => {
     function getRandomIndex(max: number): number {
         return Math.floor(Math.random() * max);
     }
-
-    
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -127,6 +125,4 @@ const MovieDetailsPage = () => {
             </section>
         </div>
     );
-};
-
-export default MovieDetailsPage;
+}

@@ -6,11 +6,12 @@ import { Movie } from "../lib/types";
 import Card from "@/app/components/Card/Card";
 import style from "./style.module.css";
 import Pagination from "../components/Pagination/Pagination";
+import { ImSpinner2 } from "react-icons/im";
 
-const MoviesPage = () => {
+export default function MoviesPage() {
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get("search") || "";
-    const [movies, setMovies] = useState<Movie[]>([]);
+    const [movies, setMovies] = useState<Movie[] | null>(null);
     const [childCount, setChildCount] = useState<number>(0);
     const [page, setPage] = useState(1);
     const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
@@ -24,21 +25,33 @@ const MoviesPage = () => {
     }, [page]);
 
     useEffect(() => {
-        if (searchQuery) {
-            const lowercasedQuery = searchQuery.toLowerCase();
-            setFilteredMovies(
-                movies.filter((movie) =>
-                    movie.title.toLowerCase().includes(lowercasedQuery)
-                )
-            );
-        } else {
-            setFilteredMovies(movies);
+        if (movies) {
+            if (searchQuery) {
+                const lowercasedQuery = searchQuery.toLowerCase();
+                setFilteredMovies(
+                    movies.filter((movie) =>
+                        movie.title.toLowerCase().includes(lowercasedQuery)
+                    )
+                );
+            } else {
+                setFilteredMovies(movies);
+            }
         }
     }, [searchQuery, movies]);
 
     useEffect(() => {
-        setChildCount(filteredMovies.length);
+        if (filteredMovies) {
+            setChildCount(filteredMovies.length);
+        }
     }, [filteredMovies]);
+
+    if (movies === null) {
+        return (
+            <div className="spinner">
+                <ImSpinner2 />
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -72,6 +85,4 @@ const MoviesPage = () => {
             </section>
         </div>
     );
-};
-
-export default MoviesPage;
+}

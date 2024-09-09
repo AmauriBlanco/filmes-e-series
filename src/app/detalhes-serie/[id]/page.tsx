@@ -9,7 +9,7 @@ import style from "./style.module.css";
 import HeaderEmAlta from "@/app/components/HeaderSections/HeaderEmAlta";
 import { ImSpinner2 } from "react-icons/im";
 
-const SerieDetailPage = () => {
+export default function SerieDetailPage() {
     const { id } = useParams();
     const [serie, setSerie] = useState<SerieDetailsTypes | null>(null);
     const [suggestedSerie, setSuggestedSerie] = useState<Serie[]>([]);
@@ -23,13 +23,14 @@ const SerieDetailPage = () => {
             fetchSerieDetails();
         }
     }, [id]);
+
     function getRandomIndex(max: number): number {
         return Math.floor(Math.random() * max);
     }
 
     useEffect(() => {
         const fechtSeries = async () => {
-            const data = await getSeries(getRandomIndex(500)); 
+            const data = await getSeries(getRandomIndex(500));
 
             const randomIndex = getRandomIndex(data.length - 5); // Gera um índice aleatório
             setSuggestedSerie(data.slice(randomIndex, randomIndex + 5)); // Pega 4 séries a partir do índice aleatório
@@ -124,6 +125,4 @@ const SerieDetailPage = () => {
             </section>
         </div>
     );
-};
-
-export default SerieDetailPage;
+}
