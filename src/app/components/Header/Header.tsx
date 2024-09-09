@@ -14,7 +14,7 @@ export default function Header() {
         setIsMenuOpen((prevState) => !prevState);
     };
 
-    const showSearch = pathname === "/filmes" || pathname === "/series";
+    const showSearch = pathname === "/filmes/" || pathname === "/series/";
 
     return (
         <header className={styles.header}>

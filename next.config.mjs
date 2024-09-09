@@ -7,8 +7,6 @@ const nextConfig = {
             },
         ],
     },
-    basePath: "/filmes-e-series",
-    assetPrefix: "/filmes-e-series/",
     trailingSlash: true,
 };
 

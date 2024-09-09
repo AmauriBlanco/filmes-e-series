@@ -9,7 +9,7 @@ export default function InputSearch() {
     const router = useRouter();
 
     const handleSearch = (query: string) => {
-        const searchUrl = pathname?.includes("/filmes") ? "filmes" : "series";
+        const searchUrl = pathname?.includes("filmes/") ? "filmes/" : "series/";
         if (query) {
             router.push(`/${searchUrl}?search=${encodeURIComponent(query)}`);
         } else {
