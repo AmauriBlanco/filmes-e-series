@@ -23,7 +23,7 @@ export default function Card({
                 src={imgSrc}
                 alt={title}
                 className={style.cardImage}
-                width={200}
+                width={220}
                 height={320}
                 priority
             />

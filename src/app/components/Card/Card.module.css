@@ -16,7 +16,6 @@
 
 .cardImage {
     max-width: 100%;
-    border-radius: 5px 5px 0 0;
 }
 
 .cardBody {
@@ -38,12 +37,11 @@
 }
 
 @media (max-width: 576px) {
-    .card {
-        max-width: 220px;
+    .cardTitle {
+        font-size: .8rem;
     }
     .card img {
-        
-        width: 220px;
+        width: 100%;
         height: auto;
         object-fit: cover;
     }

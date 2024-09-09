@@ -7,8 +7,8 @@ import HeaderEmAlta from "./components/HeaderSections/HeaderEmAlta";
 const HomePage = async () => {
     const movies: Movie[] = await getMovies();
     const series: Serie[] = await getSeries();
-    const limitedMovies = movies.slice(0, 4);
-    const limitedSeries = series.slice(0, 4);
+    const limitedMovies = movies.slice(0, 5);
+    const limitedSeries = series.slice(0, 5);
 
     return (
         <div>
@@ -23,7 +23,7 @@ const HomePage = async () => {
                                 imgSrc={movie.imgSrc}
                                 title={movie.title}
                                 releaseDate={movie.release_date}
-                                type="detalhes-filmes"
+                                type="detalhes-filme"
                             />
                         ))}
                     </div>
@@ -41,7 +41,7 @@ const HomePage = async () => {
                                 imgSrc={serie.imgSrc}
                                 title={serie.name}
                                 releaseDate={serie.first_air_date}
-                                type="detalhes-series"
+                                type="detalhes-serie"
                             />
                         ))}
                     </div>

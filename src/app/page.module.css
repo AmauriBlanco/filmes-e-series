@@ -15,16 +15,13 @@
 
 @media (max-width: 576px) {
     .cardContainer {
+        grid-template-columns: repeat(2,1fr);
         gap: 1rem;
     }
 
-    .card {
-        max-width: 230px;
+    .carTitle {
+        font-size: 1.2rem;
     }
 }
 
-@media (max-width: 405px) {
-    .cardContainer {
-        place-items: center;
-    }
-}
+

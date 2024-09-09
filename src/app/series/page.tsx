@@ -65,7 +65,7 @@ const HomePage = () => {
                                 imgSrc={serie.imgSrc}
                                 title={serie.name}
                                 releaseDate={serie.first_air_date}
-                                type="detalhes-series"
+                                type="detalhes-serie"
                             />
                         ))}
                     </div>

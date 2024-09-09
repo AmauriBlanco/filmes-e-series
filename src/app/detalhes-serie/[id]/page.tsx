@@ -1,48 +1,47 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getMovieDetails, getMovies } from "../../lib/api";
-import { Movie, MovieDetailsTypes } from "../../lib/types";
+import { getSerieDetails, getSeries } from "../../lib/api";
+import { Serie, SerieDetailsTypes } from "../../lib/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
 import style from "./style.module.css";
 import HeaderEmAlta from "@/app/components/HeaderSections/HeaderEmAlta";
 import { ImSpinner2 } from "react-icons/im";
 
-const MovieDetailsPage = () => {
-    const { id } = useParams(); // Use useParams para obter o ID da URL
-    const [movie, setMovie] = useState<MovieDetailsTypes | null>(null);
-    const [suggestedMovies, setSuggestedMovies] = useState<Movie[]>([]);
+const SerieDetailPage = () => {
+    const { id } = useParams();
+    const [serie, setSerie] = useState<SerieDetailsTypes | null>(null);
+    const [suggestedSerie, setSuggestedSerie] = useState<Serie[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
-
     useEffect(() => {
         if (id) {
-            const fetchMovieDetails = async () => {
-                const data = await getMovieDetails(`${id}`);
-                setMovie(data);
+            const fetchSerieDetails = async () => {
+                const data = await getSerieDetails(`${id}`);
+                setSerie(data);
             };
-            fetchMovieDetails();
+            fetchSerieDetails();
         }
     }, [id]);
-
     function getRandomIndex(max: number): number {
         return Math.floor(Math.random() * max);
     }
 
     useEffect(() => {
-        const fetchMovies = async () => {
-            const data = await getMovies(getRandomIndex(100)); // Pega os filmes randomizando suas páginas de 0 até 500
-            const randomIndex = getRandomIndex(data.length - 4);
-            setSuggestedMovies(data.slice(randomIndex, randomIndex + 4)); //captura 4 elementos de forma randômica
+        const fechtSeries = async () => {
+            const data = await getSeries(getRandomIndex(500)); 
+
+            const randomIndex = getRandomIndex(data.length - 5); // Gera um índice aleatório
+            setSuggestedSerie(data.slice(randomIndex, randomIndex + 5)); // Pega 4 séries a partir do índice aleatório
         };
-        fetchMovies();
+        fechtSeries();
     }, []);
 
     const handleToggleOverview = () => {
         setIsExpanded(!isExpanded);
     };
 
-    if (!movie)
+    if (!serie)
         return (
             <div className="spinner">
                 <ImSpinner2 />
@@ -55,29 +54,29 @@ const MovieDetailsPage = () => {
                 <div className="container">
                     <div className={style.detalhes}>
                         <Image
-                            alt={movie.title}
-                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                            alt={serie.name}
+                            src={`https://image.tmdb.org/t/p/w500${serie.poster_path}`}
                             width={200}
                             height={400}
                             priority
                         />
                         <div className={style.detalheInfo}>
                             <div className={style.infoBottom}>
-                                <h1 className={style.title}>{movie.title}</h1>
+                                <h1 className={style.title}>{serie.name}</h1>
                                 <p
                                     className={`${
-                                        movie.vote_average < 7
+                                        serie.vote_average < 7
                                             ? style.average
                                             : style.aboveAverage
                                     } ${style.vote}`}
                                 >
-                                    {movie.vote_average.toFixed(1)}
+                                    {serie.vote_average.toFixed(1)}
                                 </p>
                             </div>
                             <div className={style.infoBottom}>
                                 <p className={style.genres}>
                                     <span>Gênero</span>{" "}
-                                    {movie.genres.join(", ")}
+                                    {serie.genres.join(", ")}
                                 </p>
                                 <p className={style.release}>
                                     <span>Estreia</span>{" "}
@@ -85,7 +84,7 @@ const MovieDetailsPage = () => {
                                         day: "2-digit",
                                         month: "2-digit",
                                         year: "numeric",
-                                    }).format(new Date(movie.release_date))}
+                                    }).format(new Date(serie.first_air_date))}
                                 </p>
                             </div>
 
@@ -94,7 +93,7 @@ const MovieDetailsPage = () => {
                                     isExpanded ? style.expanded : ""
                                 }`}
                             >
-                                <span>Sinopse</span> {movie.overview}
+                                <span>Sinopse</span> {serie.overview}
                             </p>
                             <button
                                 className={style.showMore}
@@ -108,16 +107,16 @@ const MovieDetailsPage = () => {
             </section>
             <section className={style.sugestao}>
                 <div className="container">
-                    <HeaderEmAlta title="Filmes relacionados" url="filmes" />
+                    <HeaderEmAlta title="Séries relacionadas" url="series" />
                     <div className={style.cardContainer}>
-                        {suggestedMovies.map((movie) => (
+                        {suggestedSerie.map((serie) => (
                             <Card
-                                key={movie.id}
-                                href={movie.href}
-                                imgSrc={movie.imgSrc}
-                                title={movie.title}
-                                releaseDate={movie.release_date}
-                                type="detalhes-filmes"
+                                key={serie.id}
+                                href={serie.href}
+                                imgSrc={serie.imgSrc}
+                                title={serie.name}
+                                releaseDate={serie.first_air_date}
+                                type="detalhes-serie"
                             />
                         ))}
                     </div>
@@ -127,4 +126,4 @@ const MovieDetailsPage = () => {
     );
 };
 
-export default MovieDetailsPage;
+export default SerieDetailPage;

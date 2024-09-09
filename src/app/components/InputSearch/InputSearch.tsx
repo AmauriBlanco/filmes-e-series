@@ -19,7 +19,6 @@ export default function InputSearch() {
 
     useEffect(() => {
         handleSearch(searchQuery);
-        console.log(searchQuery);
     }, [searchQuery]);
 
     return (

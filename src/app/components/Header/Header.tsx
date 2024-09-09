@@ -69,10 +69,6 @@ export default function Header() {
                         />
                         <ul>
                             <li>
-                                {/* Mostrar campo de busca apenas nas páginas /filmes e /series */}
-                                {showSearch && <InputSearch />}
-                            </li>
-                            <li>
                                 <Link onClick={toggleMenu} href="/filmes">Filmes</Link>
                             </li>
                             <li>

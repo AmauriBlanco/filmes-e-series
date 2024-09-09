@@ -63,7 +63,7 @@ const MoviesPage = () => {
                                 imgSrc={movie.imgSrc}
                                 title={movie.title}
                                 releaseDate={movie.release_date}
-                                type={"detalhes-filmes"}
+                                type="detalhes-filme"
                             />
                         ))}
                     </div>
