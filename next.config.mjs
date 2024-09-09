@@ -1,14 +1,12 @@
-module.exports = {
-    images: {
-      remotePatterns: [
+export const images = {
+    remotePatterns: [
         {
-          protocol: "https",
-          hostname: "image.tmdb.org",
+            protocol: "https",
+            hostname: "image.tmdb.org",
         },
-      ],
-    },
-    basePath: '/filmes-e-series',  
-    assetPrefix: '/filmes-e-series/', 
-    trailingSlash: true,
-  };
+    ],
+};
+export const basePath = '/filmes-e-series';
+export const assetPrefix = '/filmes-e-series/';
+export const trailingSlash = true;
   
