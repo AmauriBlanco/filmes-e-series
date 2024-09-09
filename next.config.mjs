@@ -1,12 +1,18 @@
-export const images = {
-    remotePatterns: [
-        {
-            protocol: "https",
-            hostname: "image.tmdb.org",
-        },
-    ],
+// next.config.mjs
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "image.tmdb.org",
+            },
+        ],
+    },
+    basePath: "/filmes-e-series",
+    assetPrefix: "/filmes-e-series/",
+    trailingSlash: true,
 };
-export const basePath = '/filmes-e-series';
-export const assetPrefix = '/filmes-e-series/';
-export const trailingSlash = true;
-  
+
+export default nextConfig;
