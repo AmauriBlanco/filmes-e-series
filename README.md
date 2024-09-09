@@ -30,7 +30,10 @@ Para utilizar os recursos da API do The Movie Database (TMDB), você precisa de 
 NEXT_PUBLIC_API_KEY=sua_chave_aqui
 ```
 
-## iniciado com
+Primeiro execute o comando abaixo para instalar todas as dependencias necessárias do projeto
+```bash
+npm install
+```
 
 Primeiro, execute o servidor de desenvolvimento:
 ```bash
