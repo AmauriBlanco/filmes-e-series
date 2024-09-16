@@ -9,7 +9,7 @@ const nextConfig = {
         ],
     },
     trailingSlash: true,
-    async rewrites() {
+    rewrites() {
         return [
             {
                 source: "/filmes/:path*",

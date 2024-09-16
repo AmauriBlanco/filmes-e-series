@@ -6,7 +6,7 @@ import { Serie, SerieDetailsTypes } from "../../../lib/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
 import style from "./style.module.css";
-import HeaderEmAlta from "@/app/components/HeaderSections/HeaderEmAlta";
+import HeaderSections from "@/app/components/HeaderSections/HeaderSections";
 import { ImSpinner2 } from "react-icons/im";
 
 export default function SerieDetailPage() {
@@ -108,7 +108,7 @@ export default function SerieDetailPage() {
             </section>
             <section className={style.sugestao}>
                 <div className="container">
-                    <HeaderEmAlta title="Séries relacionadas" url="series" />
+                    <HeaderSections title="Séries relacionadas" url="series" />
                     <div className={style.cardContainer}>
                         {suggestedSerie.map((serie) => (
                             <Card

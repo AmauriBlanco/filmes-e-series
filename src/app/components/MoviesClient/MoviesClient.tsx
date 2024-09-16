@@ -91,7 +91,8 @@ const MoviesClient = () => {
                             </div>
                         )}
                     </div>
-                    <Pagination page={page} setPage={setPage} />
+                    {!searchQuery && <Pagination page={page} setPage={setPage} />}
+                    
                 </div>
             </section>
         </div>

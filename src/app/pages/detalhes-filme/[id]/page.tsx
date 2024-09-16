@@ -6,7 +6,7 @@ import { Movie, MovieDetailsTypes } from "../../../lib/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
 import style from "./style.module.css";
-import HeaderEmAlta from "@/app/components/HeaderSections/HeaderEmAlta";
+import HeaderSections from "@/app/components/HeaderSections/HeaderSections";
 import { ImSpinner2 } from "react-icons/im";
 
 export default function MovieDetailsPage() {
@@ -108,7 +108,7 @@ export default function MovieDetailsPage() {
             </section>
             <section className={style.sugestao}>
                 <div className="container">
-                    <HeaderEmAlta title="Filmes relacionados" url="filmes" />
+                    <HeaderSections title="Filmes relacionados" url="filmes" />
                     <div className={style.cardContainer}>
                         {suggestedMovies.map((movie) => (
                             <Card
