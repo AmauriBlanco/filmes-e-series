@@ -38,4 +38,24 @@ export interface SerieDetailsTypes {
     vote_average: number; 
 }
 
+export interface RelatedMovie {
+    id: number;
+    title: string; 
+    poster_path: string;
+    first_air_date: string; 
+    overview: string;
+    genres: string[]; 
+    vote_average: number; 
+}
+
+
+export interface RelatedMovie {
+    id: number;
+    title: string; 
+    poster_path: string;
+    first_air_date: string; 
+    overview: string;
+    genres: string[]; 
+    vote_average: number; 
+}
 

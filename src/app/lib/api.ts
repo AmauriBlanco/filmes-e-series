@@ -40,54 +40,105 @@ export async function getSeries(page: number = 1) {
     }
 }
 
-export async function getMovieDetails(
+async function getDetails(
+    type: "movie" | "tv",
     id: string
-): Promise<MovieDetailsTypes | null> {
+): Promise<MovieDetailsTypes | SerieDetailsTypes | null> {
     try {
-        const response = await axios.get(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=${LANGUAGE}`
-        );
+        //URL base
+        let url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${API_KEY}`;
+
+        // Adicionando o parâmetro 'language' apenas para filmes
+        if (type === "movie") {
+            url += `&language=${LANGUAGE}`;
+        }
+
+        const response = await axios.get(url);
 
         const genres = response.data.genres.map(
             (genre: { name: string }) => genre.name
         );
-        const voteAverage = response.data.vote_average;
 
-        return {
-            ...response.data,
-            genres,
-            vote_average: voteAverage,
-        };
+        if (type === "movie") {
+            return {
+                id: response.data.id,
+                title: response.data.title,
+                poster_path: response.data.poster_path,
+                release_date: response.data.release_date,
+                overview: response.data.overview,
+                genres,
+                vote_average: response.data.vote_average,
+            } as MovieDetailsTypes;
+        } else {
+            return {
+                id: response.data.id,
+                name: response.data.name,
+                poster_path: response.data.poster_path,
+                first_air_date: response.data.first_air_date,
+                overview: response.data.overview,
+                genres,
+                vote_average: response.data.vote_average,
+            } as SerieDetailsTypes;
+        }
     } catch (error) {
-        console.error("Erro ao buscar detalhes do filme:", error);
+        console.error(
+            `Erro ao buscar detalhes do ${
+                type === "movie" ? "filme" : "série"
+            }:`,
+            error
+        );
         return null;
     }
 }
 
-export async function getSerieDetails(
+export async function getMovieDetails(id: string) {
+    return getDetails("movie", `${id}`);
+}
+
+export async function getSerieDetails(id: string) {
+    return getDetails("tv", `${id}`);
+}
+
+async function getRelated(
+    type: "movie" | "tv",
     id: string
-): Promise<SerieDetailsTypes | null> {
+): Promise<Movie[] | Serie[] | null> {
     try {
-        const response = await axios.get(
-            `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`
-        );
+        // Construindo a URL baseada no tipo
+        const url = `https://api.themoviedb.org/3/${type}/${id}/recommendations?api_key=${API_KEY}`;
 
-        const genres = response.data.genres.map(
-            (genre: { name: string }) => genre.name
-        );
-        const voteAverage = response.data.vote_average;
+        const response = await axios.get(url);
 
-        return {
-            id: response.data.id,
-            name: response.data.name,
-            poster_path: response.data.poster_path,
-            first_air_date: response.data.first_air_date,
-            overview: response.data.overview,
-            genres,
-            vote_average: voteAverage,
-        };
+        if (type === "movie") {
+            return response.data.results.map((relate: Movie) => ({
+                id: relate.id,
+                href: `${relate.id}`,
+                imgSrc: `https://image.tmdb.org/t/p/w500${relate.poster_path}`,
+                title: relate.title,
+                release_date: relate.release_date,
+            })) as Movie[];
+        } else {
+            return response.data.results.map((relate: Serie) => ({
+                id: relate.id,
+                href: `${relate.id}`,
+                imgSrc: `https://image.tmdb.org/t/p/w500${relate.poster_path}`,
+                name: relate.name,
+                first_air_date: relate.first_air_date,
+            })) as Serie[];
+        }
     } catch (error) {
-        console.error("Erro ao buscar detalhes da série:", error);
+        console.error(
+            `Erro ao carregar conteúdo relacionado para ${type}:`,
+            error
+        );
         return null;
     }
+}
+
+export async function getRelatedMovie(id: string) {
+    return getRelated("movie", `${id}`);
+}
+
+export async function getRelatedSerie(id: string) {
+    return getRelated("tv", `${id}`);
 }

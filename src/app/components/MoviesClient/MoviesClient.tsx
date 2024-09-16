@@ -10,8 +10,7 @@ import Pagination from "../Pagination/Pagination";
 import { ImSpinner2 } from "react-icons/im";
 
 const MoviesClient = () => {
-    const searchParams = useSearchParams();
-    const searchQuery = searchParams.get("search") || "";
+    const searchQuery = useSearchParams().get("search") || "";
     const [movies, setMovies] = useState<Movie[] | null>(null);
     const [childCount, setChildCount] = useState<number>(0);
     const [page, setPage] = useState(1);

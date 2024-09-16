@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./InputSearch.module.css";
 import { usePathname, useRouter } from "next/navigation";
 import { FaSearch } from "react-icons/fa";
+
 export default function InputSearch() {
     const [searchQuery, setSearchQuery] = useState("");
     const pathname = usePathname();
@@ -11,10 +12,10 @@ export default function InputSearch() {
     const handleSearch = (query: string) => {
         const searchUrl = pathname?.includes("filmes/") ? "filmes/" : "series/";
         if (query) {
-            router.push(`/${searchUrl}?search=${encodeURIComponent(query)}`);
+            router.push(`?search=${encodeURIComponent(query)}`);
         } else {
             // Redireciona para a lista original quando o input estiver vazio
-            router.push(`/${searchUrl}`);
+             router.push(`/${searchUrl}`);
         }
     };
 

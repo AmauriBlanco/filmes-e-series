@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getMovieDetails, getMovies } from "../../lib/api";
+import { getMovieDetails, getRelatedMovie } from "../../lib/api";
 import { Movie, MovieDetailsTypes } from "../../lib/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
@@ -14,29 +14,29 @@ export default function MovieDetailsPage() {
     const [movie, setMovie] = useState<MovieDetailsTypes | null>(null);
     const [suggestedMovies, setSuggestedMovies] = useState<Movie[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
+    const AVERAGE_GRADE = 7;
 
     useEffect(() => {
         if (id) {
             const fetchMovieDetails = async () => {
                 const data = await getMovieDetails(`${id}`);
-                setMovie(data);
+                setMovie(data as MovieDetailsTypes);
             };
             fetchMovieDetails();
         }
     }, [id]);
 
-    function getRandomIndex(max: number): number {
-        return Math.floor(Math.random() * max);
-    }
-
     useEffect(() => {
-        const fetchMovies = async () => {
-            const data = await getMovies(getRandomIndex(100)); // Pega os filmes randomizando suas páginas de 0 até 100
-            const randomIndex = getRandomIndex(data.length - 5);
-            setSuggestedMovies(data.slice(randomIndex, randomIndex + 5)); //captura 5 elementos de forma randômica
-        };
-        fetchMovies();
-    }, []);
+        if (id) {
+            const fetchRelatedMovies = async () => {
+                const data = await getRelatedMovie(`${id}`);
+                if (data !== null) {
+                    setSuggestedMovies(data.slice(0, 5) as Movie[]);
+                }
+            };
+            fetchRelatedMovies();
+        }
+    }, [id]);
 
     const handleToggleOverview = () => {
         setIsExpanded(!isExpanded);
@@ -66,7 +66,7 @@ export default function MovieDetailsPage() {
                                 <h1 className={style.title}>{movie.title}</h1>
                                 <p
                                     className={`${
-                                        movie.vote_average < 7
+                                        movie.vote_average < AVERAGE_GRADE
                                             ? style.average
                                             : style.aboveAverage
                                     } ${style.vote}`}

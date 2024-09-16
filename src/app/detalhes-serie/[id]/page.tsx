@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getSerieDetails, getSeries } from "../../lib/api";
+import { getSerieDetails, getRelatedSerie } from "../../lib/api";
 import { Serie, SerieDetailsTypes } from "../../lib/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
@@ -14,29 +14,29 @@ export default function SerieDetailPage() {
     const [serie, setSerie] = useState<SerieDetailsTypes | null>(null);
     const [suggestedSerie, setSuggestedSerie] = useState<Serie[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
+    const AVERAGE_GRADE = 7;
+
     useEffect(() => {
         if (id) {
             const fetchSerieDetails = async () => {
                 const data = await getSerieDetails(`${id}`);
-                setSerie(data);
+                setSerie(data as SerieDetailsTypes);
             };
             fetchSerieDetails();
         }
     }, [id]);
 
-    function getRandomIndex(max: number): number {
-        return Math.floor(Math.random() * max);
-    }
-
     useEffect(() => {
-        const fechtSeries = async () => {
-            const data = await getSeries(getRandomIndex(500));
-
-            const randomIndex = getRandomIndex(data.length - 5); // Gera um índice aleatório
-            setSuggestedSerie(data.slice(randomIndex, randomIndex + 5)); // Pega 4 séries a partir do índice aleatório
-        };
-        fechtSeries();
-    }, []);
+        if (id) {
+            const fetchRelatedSeries = async () => {
+                const data = await getRelatedSerie(`${id}`);
+                if (data !== null) {
+                    setSuggestedSerie(data.slice(0, 5) as Serie[]);
+                }
+            };
+            fetchRelatedSeries();
+        }
+    }, [id]);
 
     const handleToggleOverview = () => {
         setIsExpanded(!isExpanded);
@@ -66,7 +66,7 @@ export default function SerieDetailPage() {
                                 <h1 className={style.title}>{serie.name}</h1>
                                 <p
                                     className={`${
-                                        serie.vote_average < 7
+                                        serie.vote_average < AVERAGE_GRADE
                                             ? style.average
                                             : style.aboveAverage
                                     } ${style.vote}`}
