@@ -2,15 +2,14 @@ import dynamic from "next/dynamic";
 import React, { Suspense } from "react";
 import { ImSpinner2 } from "react-icons/im";
 
-
-const SeriesClient = dynamic(
-    () => import("../components/SeriesClient/SeriesClient"),
+const MoviesClient = dynamic(
+    () => import("../../components/MoviesClient/MoviesClient"),
     {
         ssr: false, // Renderiza apenas no lado do cliente
     }
 );
 
-const SeriesPage = () => {
+const FilmesPage = () => {
     return (
         <div>
             <Suspense
@@ -20,10 +19,10 @@ const SeriesPage = () => {
                     </div>
                 }
             >
-                <SeriesClient />
+                <MoviesClient />
             </Suspense>
         </div>
     );
 };
 
-export default SeriesPage;
+export default FilmesPage;

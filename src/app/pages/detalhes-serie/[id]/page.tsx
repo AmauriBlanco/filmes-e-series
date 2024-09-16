@@ -1,8 +1,8 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getSerieDetails, getRelatedSerie } from "../../lib/api";
-import { Serie, SerieDetailsTypes } from "../../lib/types";
+import { getSerieDetails, getRelatedSerie } from "../../../lib/api";
+import { Serie, SerieDetailsTypes } from "../../../lib/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
 import style from "./style.module.css";
