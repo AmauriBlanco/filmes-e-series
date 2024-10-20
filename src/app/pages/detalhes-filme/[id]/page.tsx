@@ -57,8 +57,8 @@ export default function MovieDetailsPage() {
                         <Image
                             alt={movie.title}
                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                            width={200}
-                            height={400}
+                            width={300}
+                            height={450}
                             priority
                         />
                         <div className={style.detalheInfo}>
@@ -106,6 +106,7 @@ export default function MovieDetailsPage() {
                     </div>
                 </div>
             </section>
+            
             <section className={style.sugestao}>
                 <div className="container">
                     <HeaderSections title="Filmes relacionados" url="filmes" />

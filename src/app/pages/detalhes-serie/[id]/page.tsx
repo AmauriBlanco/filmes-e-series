@@ -57,8 +57,8 @@ export default function SerieDetailPage() {
                         <Image
                             alt={serie.name}
                             src={`https://image.tmdb.org/t/p/w500${serie.poster_path}`}
-                            width={200}
-                            height={400}
+                            width={300}
+                            height={450}
                             priority
                         />
                         <div className={style.detalheInfo}>
