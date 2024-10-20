@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { getMovies } from "../../lib/api";
-import { Movie } from "../../lib/types";
+import { getMovies } from "../../services/utils/api";
+import { Movie } from "../../services/types/types";
 import Card from "../Card/Card";
 import style from "./MovieClient.module.css";
 import Pagination from "../Pagination/Pagination";

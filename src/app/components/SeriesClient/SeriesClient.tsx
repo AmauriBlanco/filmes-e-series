@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { getSeries } from "../../lib/api";
-import { Serie } from "../../lib/types";
+import { getSeries } from "../../services/utils/api";
+import { Serie } from "../../services/types/types";
 import Card from "../Card/Card";
 import style from "./SeriesClient.module.css";
 import Pagination from "../Pagination/Pagination";

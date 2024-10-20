@@ -1,5 +1,10 @@
 import axios from "axios";
-import { Movie, MovieDetailsTypes, Serie, SerieDetailsTypes } from "./types";
+import {
+    Movie,
+    MovieDetailsTypes,
+    Serie,
+    SerieDetailsTypes,
+} from "./types/types";
 
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const LANGUAGE = "pt-BR";

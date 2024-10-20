@@ -1,7 +1,7 @@
 import Card from ".//components/Card/Card";
 import style from "./page.module.css";
-import { getMovies, getSeries } from "./lib/api";
-import { Movie, Serie } from "./lib/types";
+import { getMovies, getSeries } from "./services/utils/api";
+import { Movie, Serie } from "./services/types/types";
 import HeaderSections from "./components/HeaderSections/HeaderSections";
 
 const HomePage = async () => {
