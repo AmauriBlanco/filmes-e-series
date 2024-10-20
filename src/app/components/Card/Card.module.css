@@ -5,17 +5,11 @@
 }
 
 .card img {
-    width: 220px;
-    height: 320px;
     object-fit: cover;
 }
 
 .card:hover {
     transform: scale(1.05);
-}
-
-.cardImage {
-    max-width: 100%;
 }
 
 .cardBody {

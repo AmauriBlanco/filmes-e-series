@@ -6,6 +6,11 @@ interface RootLayoutProps {
     children: React.ReactNode;
 }
 
+export const metadata = {
+    title: "Filmes e Séries",
+    description: "Catálogo de Filmes e Séries",
+};
+
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     return (
         <html lang="pt-BR" suppressHydrationWarning={true}>
