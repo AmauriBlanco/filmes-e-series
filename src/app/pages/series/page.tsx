@@ -1,6 +1,6 @@
-"use client";
+"use client"; // Certifica-se que o componente é client-side
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { getSeries } from "../../services/utils/api";
 import { Serie } from "../../services/types/types";
@@ -17,6 +17,9 @@ const SeriesClient = () => {
     const [childCount, setChildCount] = useState<number>(0);
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get("search") || "";
+
+    // Quantidade mínima para o pagination aparecer na tela
+    const minimumPagination = childCount > 16;
 
     useEffect(() => {
         const fetchSeries = async () => {
@@ -101,7 +104,7 @@ const SeriesClient = () => {
                         )}
                     </div>
 
-                    {!searchQuery && (
+                    {!searchQuery && minimumPagination && (
                         <Pagination page={page} setPage={setPage} />
                     )}
                 </div>
@@ -110,4 +113,16 @@ const SeriesClient = () => {
     );
 };
 
-export default SeriesClient;
+export default function Series() {
+    return (
+        <Suspense
+            fallback={
+                <div className="spinner">
+                    <ImSpinner2 />
+                </div>
+            }
+        >
+            <SeriesClient />
+        </Suspense>
+    );
+}

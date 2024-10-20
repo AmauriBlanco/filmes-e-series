@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { getMovies } from "../../services/utils/api";
 import { Movie } from "../../services/types/types";
@@ -11,11 +11,15 @@ import { ImSpinner2 } from "react-icons/im";
 import { CgSmileSad } from "react-icons/cg";
 
 const MoviesClient = () => {
-    const searchQuery = useSearchParams().get("search") || "";
     const [movies, setMovies] = useState<Movie[] | null>(null);
-    const [childCount, setChildCount] = useState<number>(0);
     const [page, setPage] = useState(1);
     const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
+    const [childCount, setChildCount] = useState<number>(0);
+    const searchParams = useSearchParams();
+    const searchQuery = searchParams.get("search") || "";
+
+    // Quantidade mínima para o pagination aparecer na tela
+    const minimumPagination = childCount > 16;
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -27,6 +31,7 @@ const MoviesClient = () => {
                 setMovies([]);
             }
         };
+
         fetchMovies();
     }, [page]);
 
@@ -61,7 +66,7 @@ const MoviesClient = () => {
 
     return (
         <div>
-            <section>
+            <section className={style.secaoCatalogo}>
                 <div className="container">
                     <h2 className={style.sectionTitle}>Filmes Populares</h2>
 
@@ -99,7 +104,8 @@ const MoviesClient = () => {
                             </div>
                         )}
                     </div>
-                    {!searchQuery && (
+
+                    {!searchQuery && minimumPagination && (
                         <Pagination page={page} setPage={setPage} />
                     )}
                 </div>
@@ -108,4 +114,16 @@ const MoviesClient = () => {
     );
 };
 
-export default MoviesClient;
+export default function Movies() {
+    return (
+        <Suspense
+            fallback={
+                <div className="spinner">
+                    <ImSpinner2 />
+                </div>
+            }
+        >
+            <MoviesClient />
+        </Suspense>
+    );
+}
