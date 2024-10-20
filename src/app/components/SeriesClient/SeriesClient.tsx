@@ -8,6 +8,7 @@ import Card from "../Card/Card";
 import style from "./SeriesClient.module.css";
 import Pagination from "../Pagination/Pagination";
 import { ImSpinner2 } from "react-icons/im";
+import { CgSmileSad } from "react-icons/cg";
 
 const SeriesClient = () => {
     const [series, setSeries] = useState<Serie[] | null>(null);
@@ -73,7 +74,9 @@ const SeriesClient = () => {
                                 ? style.has3
                                 : childCount === 2
                                 ? style.has2
-                                : style.has1
+                                : childCount === 1
+                                ? style.has1
+                                : style.hasNone
                         }`}
                     >
                         {filteredSeries.length > 0 ? (
@@ -88,13 +91,19 @@ const SeriesClient = () => {
                                 />
                             ))
                         ) : (
-                            <div className="spinner">
-                                <ImSpinner2 />
+                            <div className={style.noItem}>
+                                <CgSmileSad size={35} color="white" />
+                                <p>
+                                    Nenhum filme encontrado, continue
+                                    tentando...
+                                </p>
                             </div>
                         )}
                     </div>
 
-                    <Pagination page={page} setPage={setPage} />
+                    {!searchQuery && (
+                        <Pagination page={page} setPage={setPage} />
+                    )}
                 </div>
             </section>
         </div>

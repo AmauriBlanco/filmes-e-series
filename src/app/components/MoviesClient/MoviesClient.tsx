@@ -8,6 +8,7 @@ import Card from "../Card/Card";
 import style from "./MovieClient.module.css";
 import Pagination from "../Pagination/Pagination";
 import { ImSpinner2 } from "react-icons/im";
+import { CgSmileSad } from "react-icons/cg";
 
 const MoviesClient = () => {
     const searchQuery = useSearchParams().get("search") || "";
@@ -63,6 +64,7 @@ const MoviesClient = () => {
             <section>
                 <div className="container">
                     <h2 className={style.sectionTitle}>Filmes Populares</h2>
+
                     <div
                         className={`${style.cardContainer} ${
                             childCount >= 4
@@ -71,7 +73,9 @@ const MoviesClient = () => {
                                 ? style.has3
                                 : childCount === 2
                                 ? style.has2
-                                : style.has1
+                                : childCount === 1
+                                ? style.has1
+                                : style.hasNone
                         }`}
                     >
                         {filteredMovies.length > 0 ? (
@@ -86,13 +90,18 @@ const MoviesClient = () => {
                                 />
                             ))
                         ) : (
-                            <div className="spinner">
-                                <ImSpinner2 />
+                            <div className={style.noItem}>
+                                <CgSmileSad size={35} color="white" />
+                                <p>
+                                    Nenhum filme encontrado, continue
+                                    tentando...
+                                </p>
                             </div>
                         )}
                     </div>
-                    {!searchQuery && <Pagination page={page} setPage={setPage} />}
-                    
+                    {!searchQuery && (
+                        <Pagination page={page} setPage={setPage} />
+                    )}
                 </div>
             </section>
         </div>

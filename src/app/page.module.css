@@ -13,9 +13,30 @@
     margin-bottom: 3rem;
 }
 
+/* Not FOund */
+.notFoundPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.notFoundPage h1 {
+    color: red;
+}
+
+.notFoundPage a {
+    transition: 0.6s;
+    text-decoration: underline;
+}
+
+.notFoundPage a:hover {
+    color: red;
+    text-decoration: underline;
+}
 @media (max-width: 576px) {
     .cardContainer {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
     }
 
@@ -23,5 +44,3 @@
         font-size: 1.2rem;
     }
 }
-
-

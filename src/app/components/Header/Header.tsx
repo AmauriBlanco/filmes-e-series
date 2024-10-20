@@ -20,11 +20,9 @@ export default function Header() {
         <header className={styles.header}>
             <div className="container">
                 <div className={styles.menu}>
-                    <Link href="/">SalaryFlix</Link>
+                    <Link href="/">Filmes & Series</Link>
                     <AiOutlineMenu
-                        className={`${styles.icone} ${
-                            isMenuOpen ? styles.hidden : ""
-                        }`}
+                        className={styles.icone}
                         onClick={toggleMenu}
                     />
                     {/* Desktop */}

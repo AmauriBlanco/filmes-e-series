@@ -16,8 +16,22 @@
     grid-template-columns: repeat(1, 200px);
 }
 
+.hasNone {
+    grid-template-columns: 1fr;
+}
+
 .sectionTitle {
     margin-bottom: 1rem;
+    color: #fff;
+}
+
+.noItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+    margin-top: 2rem;
     color: #fff;
 }
 
