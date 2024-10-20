@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 import { LuArrowUpNarrowWide } from "react-icons/lu";
-import style from "./HeaderEmAlta.module.css";
+import style from "./HeaderSections.module.css";
 
 interface HeaderEmAltaProps {
     title: string;

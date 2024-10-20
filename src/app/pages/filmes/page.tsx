@@ -2,16 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { getMovies } from "../../lib/api";
-import { Movie } from "../../lib/types";
-import Card from "../Card/Card";
-import style from "./MovieClient.module.css";
-import Pagination from "../Pagination/Pagination";
+import { getMovies } from "../../services/utils/api";
+import { Movie } from "../../services/types/types";
+import Card from "../../components/Card/Card";
+import style from "./style.module.css";
+import Pagination from "../../components/Pagination/Pagination";
 import { ImSpinner2 } from "react-icons/im";
+import { CgSmileSad } from "react-icons/cg";
 
 const MoviesClient = () => {
-    const searchParams = useSearchParams();
-    const searchQuery = searchParams.get("search") || "";
+    const searchQuery = useSearchParams().get("search") || "";
     const [movies, setMovies] = useState<Movie[] | null>(null);
     const [childCount, setChildCount] = useState<number>(0);
     const [page, setPage] = useState(1);
@@ -64,6 +64,7 @@ const MoviesClient = () => {
             <section>
                 <div className="container">
                     <h2 className={style.sectionTitle}>Filmes Populares</h2>
+
                     <div
                         className={`${style.cardContainer} ${
                             childCount >= 4
@@ -72,7 +73,9 @@ const MoviesClient = () => {
                                 ? style.has3
                                 : childCount === 2
                                 ? style.has2
-                                : style.has1
+                                : childCount === 1
+                                ? style.has1
+                                : style.hasNone
                         }`}
                     >
                         {filteredMovies.length > 0 ? (
@@ -87,12 +90,18 @@ const MoviesClient = () => {
                                 />
                             ))
                         ) : (
-                            <div className="spinner">
-                                <ImSpinner2 />
+                            <div className={style.noItem}>
+                                <CgSmileSad size={35} color="white" />
+                                <p>
+                                    Nenhum filme encontrado, continue
+                                    tentando...
+                                </p>
                             </div>
                         )}
                     </div>
-                    <Pagination page={page} setPage={setPage} />
+                    {!searchQuery && (
+                        <Pagination page={page} setPage={setPage} />
+                    )}
                 </div>
             </section>
         </div>

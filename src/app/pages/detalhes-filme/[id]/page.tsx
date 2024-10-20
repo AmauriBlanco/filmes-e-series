@@ -1,48 +1,48 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getSerieDetails, getSeries } from "../../lib/api";
-import { Serie, SerieDetailsTypes } from "../../lib/types";
+import { getMovieDetails, getRelatedMovie } from "../../../services/utils/api";
+import { Movie, MovieDetailsTypes } from "../../../services/types/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
 import style from "./style.module.css";
-import HeaderEmAlta from "@/app/components/HeaderSections/HeaderEmAlta";
+import HeaderSections from "@/app/components/HeaderSections/HeaderSections";
 import { ImSpinner2 } from "react-icons/im";
 
-export default function SerieDetailPage() {
-    const { id } = useParams();
-    const [serie, setSerie] = useState<SerieDetailsTypes | null>(null);
-    const [suggestedSerie, setSuggestedSerie] = useState<Serie[]>([]);
+export default function MovieDetailsPage() {
+    const { id } = useParams(); // Use useParams para obter o ID da URL
+    const [movie, setMovie] = useState<MovieDetailsTypes | null>(null);
+    const [suggestedMovies, setSuggestedMovies] = useState<Movie[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
+    const AVERAGE_GRADE = 7;
+
     useEffect(() => {
         if (id) {
-            const fetchSerieDetails = async () => {
-                const data = await getSerieDetails(`${id}`);
-                setSerie(data);
+            const fetchMovieDetails = async () => {
+                const data = await getMovieDetails(`${id}`);
+                setMovie(data as MovieDetailsTypes);
             };
-            fetchSerieDetails();
+            fetchMovieDetails();
         }
     }, [id]);
 
-    function getRandomIndex(max: number): number {
-        return Math.floor(Math.random() * max);
-    }
-
     useEffect(() => {
-        const fechtSeries = async () => {
-            const data = await getSeries(getRandomIndex(500));
-
-            const randomIndex = getRandomIndex(data.length - 5); // Gera um índice aleatório
-            setSuggestedSerie(data.slice(randomIndex, randomIndex + 5)); // Pega 4 séries a partir do índice aleatório
-        };
-        fechtSeries();
-    }, []);
+        if (id) {
+            const fetchRelatedMovies = async () => {
+                const data = await getRelatedMovie(`${id}`);
+                if (data !== null) {
+                    setSuggestedMovies(data.slice(0, 5) as Movie[]);
+                }
+            };
+            fetchRelatedMovies();
+        }
+    }, [id]);
 
     const handleToggleOverview = () => {
         setIsExpanded(!isExpanded);
     };
 
-    if (!serie)
+    if (!movie)
         return (
             <div className="spinner">
                 <ImSpinner2 />
@@ -55,29 +55,29 @@ export default function SerieDetailPage() {
                 <div className="container">
                     <div className={style.detalhes}>
                         <Image
-                            alt={serie.name}
-                            src={`https://image.tmdb.org/t/p/w500${serie.poster_path}`}
-                            width={200}
-                            height={400}
+                            alt={movie.title}
+                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                            width={300}
+                            height={450}
                             priority
                         />
                         <div className={style.detalheInfo}>
                             <div className={style.infoBottom}>
-                                <h1 className={style.title}>{serie.name}</h1>
+                                <h1 className={style.title}>{movie.title}</h1>
                                 <p
                                     className={`${
-                                        serie.vote_average < 7
+                                        movie.vote_average < AVERAGE_GRADE
                                             ? style.average
                                             : style.aboveAverage
                                     } ${style.vote}`}
                                 >
-                                    {serie.vote_average.toFixed(1)}
+                                    {movie.vote_average.toFixed(1)}
                                 </p>
                             </div>
                             <div className={style.infoBottom}>
                                 <p className={style.genres}>
                                     <span>Gênero</span>{" "}
-                                    {serie.genres.join(", ")}
+                                    {movie.genres.join(", ")}
                                 </p>
                                 <p className={style.release}>
                                     <span>Estreia</span>{" "}
@@ -85,7 +85,7 @@ export default function SerieDetailPage() {
                                         day: "2-digit",
                                         month: "2-digit",
                                         year: "numeric",
-                                    }).format(new Date(serie.first_air_date))}
+                                    }).format(new Date(movie.release_date))}
                                 </p>
                             </div>
 
@@ -94,7 +94,7 @@ export default function SerieDetailPage() {
                                     isExpanded ? style.expanded : ""
                                 }`}
                             >
-                                <span>Sinopse</span> {serie.overview}
+                                <span>Sinopse</span> {movie.overview}
                             </p>
                             <button
                                 className={style.showMore}
@@ -106,18 +106,19 @@ export default function SerieDetailPage() {
                     </div>
                 </div>
             </section>
+            
             <section className={style.sugestao}>
                 <div className="container">
-                    <HeaderEmAlta title="Séries relacionadas" url="series" />
+                    <HeaderSections title="Filmes relacionados" url="filmes" />
                     <div className={style.cardContainer}>
-                        {suggestedSerie.map((serie) => (
+                        {suggestedMovies.map((movie) => (
                             <Card
-                                key={serie.id}
-                                href={serie.href}
-                                imgSrc={serie.imgSrc}
-                                title={serie.name}
-                                releaseDate={serie.first_air_date}
-                                type="detalhes-serie"
+                                key={movie.id}
+                                href={movie.href}
+                                imgSrc={movie.imgSrc}
+                                title={movie.title}
+                                releaseDate={movie.release_date}
+                                type="detalhes-filme"
                             />
                         ))}
                     </div>

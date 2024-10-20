@@ -13,9 +13,7 @@
 }
 
 .detalhes img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .title {
@@ -69,9 +67,7 @@
 .sugestao {
     margin-top: 2rem;
 }
-.cardContainer img {
-    width: 100%;
-}
+
 
 @media (max-width: 1200px) {
     .cardContainer {
@@ -128,6 +124,11 @@
     .infoBottom {
         gap: 1rem;
         align-items: center;
+    }
+
+    .detalhes img {
+        width: 100%;
+        height: auto;
     }
 }
 

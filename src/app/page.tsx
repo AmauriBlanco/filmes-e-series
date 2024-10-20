@@ -1,8 +1,8 @@
 import Card from ".//components/Card/Card";
 import style from "./page.module.css";
-import { getMovies, getSeries } from "./lib/api";
-import { Movie, Serie } from "./lib/types";
-import HeaderEmAlta from "./components/HeaderSections/HeaderEmAlta";
+import { getMovies, getSeries } from "./services/utils/api";
+import { Movie, Serie } from "./services/types/types";
+import HeaderSections from "./components/HeaderSections/HeaderSections";
 
 const HomePage = async () => {
     const movies: Movie[] = await getMovies();
@@ -14,7 +14,7 @@ const HomePage = async () => {
         <div>
             <section className={style.secaoCatalogo}>
                 <div className="container">
-                    <HeaderEmAlta title="Filmes" url="filmes" />
+                    <HeaderSections title="Filmes" url="filmes" />
                     <div className={style.cardContainer}>
                         {limitedMovies.map((movie) => (
                             <Card
@@ -32,7 +32,7 @@ const HomePage = async () => {
 
             <section className={style.secaoCatalogo}>
                 <div className="container">
-                    <HeaderEmAlta title="Series" url="series" />
+                    <HeaderSections title="Series" url="series" />
                     <div className={style.cardContainer}>
                         {limitedSeries.map((serie) => (
                             <Card
