@@ -1,7 +1,8 @@
-"use client";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getSerieDetails, getRelatedSerie } from "../../../services/api/api";
+import {
+    getSerieDetails,
+    getSeries,
+    getRelatedSerie,
+} from "../../../services/api/api";
 import { Serie, SerieDetailsTypes } from "../../../services/types/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
@@ -9,45 +10,40 @@ import style from "./style.module.css";
 import HeaderSections from "@/app/components/HeaderSections/HeaderSections";
 import { ImSpinner2 } from "react-icons/im";
 
-export default function SerieDetailPage() {
-    const { id } = useParams();
-    const [serie, setSerie] = useState<SerieDetailsTypes | null>(null);
-    const [suggestedSerie, setSuggestedSerie] = useState<Serie[]>([]);
-    const [isExpanded, setIsExpanded] = useState(false);
+// gerar os parâmetros estaticamente
+export async function generateStaticParams() {
+    const allIds = (await getSeries()).map((serie: Serie) => serie.id);
+    return allIds.map((id: number) => ({ id: id.toString() }));
+}
+
+// title da página dinamico
+export async function generateMetadata({ params }: { params: { id: string } }) {
+    const serie = await getSerieDetails(params.id);
+    return {
+        title: (serie as SerieDetailsTypes).name || "Série não encontrada",
+    };
+}
+
+export default async function SerieDetailPage({
+    params,
+}: {
+    params: { id: string };
+}) {
+    const serie = (await getSerieDetails(params.id)) as SerieDetailsTypes;
+    const suggestedSeries = (await getRelatedSerie(params.id))?.slice(
+        0,
+        5
+    ) as Serie[];
+
     const AVERAGE_GRADE = 7;
 
-    useEffect(() => {
-        if (id) {
-            const fetchSerieDetails = async () => {
-                const data = await getSerieDetails(`${id}`);
-                setSerie(data as SerieDetailsTypes);
-            };
-            fetchSerieDetails();
-        }
-    }, [id]);
-
-    useEffect(() => {
-        if (id) {
-            const fetchRelatedSeries = async () => {
-                const data = await getRelatedSerie(`${id}`);
-                if (data !== null) {
-                    setSuggestedSerie(data.slice(0, 5) as Serie[]);
-                }
-            };
-            fetchRelatedSeries();
-        }
-    }, [id]);
-
-    const handleToggleOverview = () => {
-        setIsExpanded(!isExpanded);
-    };
-
-    if (!serie)
+    if (!serie) {
         return (
             <div className="spinner">
                 <ImSpinner2 />
             </div>
         );
+    }
 
     return (
         <div>
@@ -89,19 +85,9 @@ export default function SerieDetailPage() {
                                 </p>
                             </div>
 
-                            <p
-                                className={`${style.overview} ${
-                                    isExpanded ? style.expanded : ""
-                                }`}
-                            >
+                            <p className={`${style.overview}`}>
                                 <span>Sinopse</span> {serie.overview}
                             </p>
-                            <button
-                                className={style.showMore}
-                                onClick={handleToggleOverview}
-                            >
-                                {isExpanded ? "Ver menos" : "Ver mais"}
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -110,7 +96,7 @@ export default function SerieDetailPage() {
                 <div className="container">
                     <HeaderSections title="Séries relacionadas" url="series" />
                     <div className={style.cardContainer}>
-                        {suggestedSerie.map((serie) => (
+                        {suggestedSeries.map((serie) => (
                             <Card
                                 key={serie.id}
                                 href={serie.href}

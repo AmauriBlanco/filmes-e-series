@@ -1,7 +1,8 @@
-"use client";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getMovieDetails, getRelatedMovie } from "../../../services/api/api";
+import {
+    getMovieDetails,
+    getMovies,
+    getRelatedMovie,
+} from "../../../services/api/api";
 import { Movie, MovieDetailsTypes } from "../../../services/types/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
@@ -9,45 +10,40 @@ import style from "./style.module.css";
 import HeaderSections from "@/app/components/HeaderSections/HeaderSections";
 import { ImSpinner2 } from "react-icons/im";
 
-export default function MovieDetailsPage() {
-    const { id } = useParams(); // Use useParams para obter o ID da URL
-    const [movie, setMovie] = useState<MovieDetailsTypes | null>(null);
-    const [suggestedMovies, setSuggestedMovies] = useState<Movie[]>([]);
-    const [isExpanded, setIsExpanded] = useState(false);
+// gerar os parâmetros estaticamente
+export async function generateStaticParams() {
+    const allIds = (await getMovies()).map((movie: Movie) => movie.id);
+    return allIds.map((id: number) => ({ id: id.toString() }));
+}
+
+// title da página dinamico
+export async function generateMetadata({ params }: { params: { id: string } }) {
+    const movie = await getMovieDetails(params.id);
+    return {
+        title: (movie as MovieDetailsTypes).title || "Filme não encontrado",
+    };
+}
+
+export default async function MovieDetailsPage({
+    params,
+}: {
+    params: { id: string };
+}) {
+    const movie = (await getMovieDetails(params.id)) as MovieDetailsTypes;
+    const suggestedMovies = (await getRelatedMovie(params.id))?.slice(
+        0,
+        5
+    ) as Movie[];
+
     const AVERAGE_GRADE = 7;
 
-    useEffect(() => {
-        if (id) {
-            const fetchMovieDetails = async () => {
-                const data = await getMovieDetails(`${id}`);
-                setMovie(data as MovieDetailsTypes);
-            };
-            fetchMovieDetails();
-        }
-    }, [id]);
-
-    useEffect(() => {
-        if (id) {
-            const fetchRelatedMovies = async () => {
-                const data = await getRelatedMovie(`${id}`);
-                if (data !== null) {
-                    setSuggestedMovies(data.slice(0, 5) as Movie[]);
-                }
-            };
-            fetchRelatedMovies();
-        }
-    }, [id]);
-
-    const handleToggleOverview = () => {
-        setIsExpanded(!isExpanded);
-    };
-
-    if (!movie)
+    if (!movie) {
         return (
             <div className="spinner">
                 <ImSpinner2 />
             </div>
         );
+    }
 
     return (
         <div>
@@ -89,19 +85,9 @@ export default function MovieDetailsPage() {
                                 </p>
                             </div>
 
-                            <p
-                                className={`${style.overview} ${
-                                    isExpanded ? style.expanded : ""
-                                }`}
-                            >
+                            <p className={`${style.overview}`}>
                                 <span>Sinopse</span> {movie.overview}
                             </p>
-                            <button
-                                className={style.showMore}
-                                onClick={handleToggleOverview}
-                            >
-                                {isExpanded ? "Ver menos" : "Ver mais"}
-                            </button>
                         </div>
                     </div>
                 </div>
