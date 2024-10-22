@@ -9,40 +9,40 @@ import {
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const LANGUAGE = "pt-BR";
 
-export async function getMovies(page: number = 1) {
+async function getMovieOrSerie(page: number = 1, type: "movie" | "serie") {
+    const urlType = type === "movie" ? "movie" : "tv";
     try {
         const response = await axios.get(
-            `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=${LANGUAGE}&page=${page}`
+            `https://api.themoviedb.org/3/${urlType}/popular?api_key=${API_KEY}&language=${LANGUAGE}&page=${page}`
         );
-        return response.data.results.map((movie: Movie) => ({
-            id: movie.id,
-            href: `${movie.id}`,
-            imgSrc: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            title: movie.title,
-            release_date: movie.release_date,
+        if (type === "movie") {
+            return response.data.results.map((type: Movie) => ({
+                id: type.id,
+                href: `${type.id}`,
+                imgSrc: `https://image.tmdb.org/t/p/w500${type.poster_path}`,
+                title: type.title,
+                release_date: type.release_date,
+            }));
+        }
+        return response.data.results.map((type: Serie) => ({
+            id: type.id,
+            href: `${type.id}`,
+            imgSrc: `https://image.tmdb.org/t/p/w500${type.poster_path}`,
+            name: type.name,
+            first_air_date: type.first_air_date,
         }));
     } catch (error) {
-        console.error("Erro ao buscar filmes:", error);
+        console.error(`Erro ao buscar ${type}:`, error);
         return [];
     }
 }
 
+export async function getMovies(page: number = 1) {
+    return getMovieOrSerie(page, "movie");
+}
+
 export async function getSeries(page: number = 1) {
-    try {
-        const response = await axios.get(
-            `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=${LANGUAGE}&page=${page}`
-        );
-        return response.data.results.map((serie: Serie) => ({
-            id: serie.id,
-            href: `${serie.id}`,
-            imgSrc: `https://image.tmdb.org/t/p/w500${serie.poster_path}`,
-            name: serie.name,
-            first_air_date: serie.first_air_date,
-        }));
-    } catch (error) {
-        console.error("Erro ao buscar séries:", error);
-        return [];
-    }
+    return getMovieOrSerie(page, "serie");
 }
 
 async function getDetails(
@@ -74,17 +74,16 @@ async function getDetails(
                 genres,
                 vote_average: response.data.vote_average,
             } as MovieDetailsTypes;
-        } else {
-            return {
-                id: response.data.id,
-                name: response.data.name,
-                poster_path: response.data.poster_path,
-                first_air_date: response.data.first_air_date,
-                overview: response.data.overview,
-                genres,
-                vote_average: response.data.vote_average,
-            } as SerieDetailsTypes;
         }
+        return {
+            id: response.data.id,
+            name: response.data.name,
+            poster_path: response.data.poster_path,
+            first_air_date: response.data.first_air_date,
+            overview: response.data.overview,
+            genres,
+            vote_average: response.data.vote_average,
+        } as SerieDetailsTypes;
     } catch (error) {
         console.error(
             `Erro ao buscar detalhes do ${
@@ -122,15 +121,14 @@ async function getRelated(
                 title: relate.title,
                 release_date: relate.release_date,
             })) as Movie[];
-        } else {
-            return response.data.results.map((relate: Serie) => ({
-                id: relate.id,
-                href: `${relate.id}`,
-                imgSrc: `https://image.tmdb.org/t/p/w500${relate.poster_path}`,
-                name: relate.name,
-                first_air_date: relate.first_air_date,
-            })) as Serie[];
         }
+        return response.data.results.map((relate: Serie) => ({
+            id: relate.id,
+            href: `${relate.id}`,
+            imgSrc: `https://image.tmdb.org/t/p/w500${relate.poster_path}`,
+            name: relate.name,
+            first_air_date: relate.first_air_date,
+        })) as Serie[];
     } catch (error) {
         console.error(
             `Erro ao carregar conteúdo relacionado para ${type}:`,

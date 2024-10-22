@@ -1,6 +1,6 @@
 import Card from ".//components/Card/Card";
 import style from "./page.module.css";
-import { getMovies, getSeries } from "./services/utils/api";
+import { getMovies, getSeries } from "./services/api/api";
 import { Movie, Serie } from "./services/types/types";
 import HeaderSections from "./components/HeaderSections/HeaderSections";
 

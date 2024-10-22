@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getMovieDetails, getRelatedMovie } from "../../../services/utils/api";
+import { getMovieDetails, getRelatedMovie } from "../../../services/api/api";
 import { Movie, MovieDetailsTypes } from "../../../services/types/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
@@ -106,7 +106,7 @@ export default function MovieDetailsPage() {
                     </div>
                 </div>
             </section>
-            
+
             <section className={style.sugestao}>
                 <div className="container">
                     <HeaderSections title="Filmes relacionados" url="filmes" />

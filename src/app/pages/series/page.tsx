@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { getSeries } from "../../services/utils/api";
+import { getSeries } from "../../services/api/api";
 import { Serie } from "../../services/types/types";
 import Card from "../../components/Card/Card";
 import style from "./style.module.css";

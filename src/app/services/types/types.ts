@@ -6,9 +6,17 @@ export interface Movie {
     release_date: string;
     poster_path: string;
 }
+export interface MovieDetailsTypes {
+    id: number;
+    title: string;
+    poster_path: string;
+    release_date: string;
+    overview: string;
+    genres: string[];
+    vote_average: number;
+}
 
 export interface Serie {
-   
     id: number;
     imgSrc: string;
     name: string;
@@ -16,46 +24,12 @@ export interface Serie {
     first_air_date: string;
     poster_path: string;
 }
-
-export interface MovieDetailsTypes {
-    id: number;
-    title: string;
-    poster_path: string;
-    release_date: string;
-    overview: string;
-    genres: string[]; 
-    vote_average: number;
-}
-
-
 export interface SerieDetailsTypes {
     id: number;
-    name: string; 
+    name: string;
     poster_path: string;
-    first_air_date: string; 
+    first_air_date: string;
     overview: string;
-    genres: string[]; 
-    vote_average: number; 
+    genres: string[];
+    vote_average: number;
 }
-
-export interface RelatedMovie {
-    id: number;
-    title: string; 
-    poster_path: string;
-    first_air_date: string; 
-    overview: string;
-    genres: string[]; 
-    vote_average: number; 
-}
-
-
-export interface RelatedMovie {
-    id: number;
-    title: string; 
-    poster_path: string;
-    first_air_date: string; 
-    overview: string;
-    genres: string[]; 
-    vote_average: number; 
-}
-

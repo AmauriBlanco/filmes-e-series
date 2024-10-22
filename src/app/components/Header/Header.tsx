@@ -67,10 +67,19 @@ export default function Header() {
                         />
                         <ul>
                             <li>
-                                <Link onClick={toggleMenu} href="/filmes">Filmes</Link>
+                                <Link onClick={toggleMenu} href="/">
+                                    Home
+                                </Link>
                             </li>
                             <li>
-                                <Link onClick={toggleMenu} href="/series">Séries</Link>
+                                <Link onClick={toggleMenu} href="/filmes">
+                                    Filmes
+                                </Link>
+                            </li>
+                            <li>
+                                <Link onClick={toggleMenu} href="/series">
+                                    Séries
+                                </Link>
                             </li>
                         </ul>
                     </nav>

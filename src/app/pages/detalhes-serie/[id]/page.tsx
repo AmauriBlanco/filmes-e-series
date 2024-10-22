@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getSerieDetails, getRelatedSerie } from "../../../services/utils/api";
+import { getSerieDetails, getRelatedSerie } from "../../../services/api/api";
 import { Serie, SerieDetailsTypes } from "../../../services/types/types";
 import Image from "next/image";
 import Card from "@/app/components/Card/Card";
